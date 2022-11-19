@@ -5,7 +5,7 @@ prev_rating float,prev_hike_date date,curr_rating float);
 
 insert into employee values("Satish","EMP_1","2020-08-23",9123561298,"ssatish58879@gmail.com",1000000,"MGR_1",1,1,0,0,4.5,"2021-11-15",4.5);
 insert into employee values("Nakul","EMP_2","2019-07-14",9134532426,"Nakul43255@gmail.com",1200000,"MGR_1",1,1,0,0,4.8,"2021-11-15",4.6);
-insert into employee values("Rahul","EMP_3","2018-05-01",9198453242,"r25260260@gmail.com",1300000,"MGR_2",1,1,0,0,4.4,"2021-11-15",4.6);
+insert into employee values("Rahul","EMP_3","2018-05-01",91984532427,"r25260260@gmail.com",1300000,"MGR_2",1,1,0,0,4.4,"2021-11-15",4.6);
 insert into employee values("Sairam","EMP_4","2020-09-15",9143535236,"Sairam58879@gmail.com",950000,"MGR_2",1,1,0,0,4.3,"2021-11-15",4.4);
 insert into employee values("Tarun","EMP_5","2019-08-16",9145868894,"Tarun58879@gmail.com",1500000,"MGR_3",1,1,0,0,4.5,"2021-11-15",4.6);
 insert into employee values("Varsha","EMP_6","2020-09-08",9145934752,"vv0074992@gmail.com",1100000,"MGR_1",1,1,0,0,4.6,"2021-11-15",4.6);
@@ -20,7 +20,7 @@ create table emp_resp(e_name varchar(20),eid varchar(10),no_of_task_assigned int
 no_of_task_completed int,no_of_hrs_saved int,no_of_defects_found int,no_of_defects_fixed int,
 additional_accomplishments varchar(100),primary key(e_name,eid),foreign key(eid) references employee(eid));
 
-insert into emp_resp()
+-- insert into emp_resp()
 
 create table manager(m_name varchar(20),m_id varchar(10),mail_id varchar(20),mgr_start_date date,
 ph_no bigint,primary key(m_id));

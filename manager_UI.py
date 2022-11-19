@@ -1,5 +1,6 @@
 import streamlit as st
 import datetime
+from database import *
 # from helper import get_form_responces
 # st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
 
@@ -12,47 +13,58 @@ def M_UI():
     st.write('##')
     st.info('logged in as Manager')
     st.write('##')
+    mgr_id = st.session_state['user_id']
+    # c , col ,d =st.columns[1,3,1]
+    st.title(f"Welcome _{get_name_m(mgr_id)}_.")
     # dummy = st.button("LogOut")   
-    value = st.selectbox(f'select employee to Review',['a','b'])
+    st.session_state['emp_value'] = st.selectbox(f'select employee to view',show_employees(mgr_id))
     tab1, tab2, tab3 , tab4,tab5,tab6 = st.tabs(["View Details", "Review", "Schedule Meeting","Check Status","calculate score","ShortList"])
     c1,c2,c3 = st.columns(3)
     with tab1:
         
         with st.expander('Employee Details'):
-            st.write('name')
-            st.write('ID')
-            st.write('mailID')
-            st.write('ph-no')
+            [e_name,e_id,mail_id,ph_no]=get_emp_details(st.session_state['emp_value'])
+            
+            st.write(f'Name of the Employee \t: {e_name}')
+            # st.write('Name of the Employee :'str(e_name))
+            st.write(f'Company ID of the Employee \t: {e_id}')
+            st.write(f'Email ID of the Employee \t: {mail_id}')
+            st.write(f'Contact number of the Employee \t: {ph_no}')
 
+        [n_task_assn,n_task_comp,n_hour_saved,n_defect_found,n_defect_fixed,accomp]=get_emp_resp_details(st.session_state['emp_value'])
         with st.expander('Form responses'):
-            st.write('Number of Tasks assigned')
-            st.write('Number of Tasks completed')
-            st.write('Number of Hours saved')
-            st.write('Number of Defects found')
-            st.write('Number of Defects fixed')
-        with st.expander('Additional Acomplishments'):
-            st.write(' Large text ')
-        
+            
+            st.write(f'Number of Tasks assigned   \t:{n_task_assn}')
+            st.write(f'Number of Tasks completed  \t:{n_task_comp}')
+            st.write(f'Number of Hours saved      \t:{n_hour_saved}')
+            st.write(f'Number of Defects found    \t:{n_defect_found}')
+            st.write(f'Number of Defects fixed    \t:{n_defect_fixed}')
+        with st.expander('Additional Acomplishments:'):
+            st.write(f'Accomplishments of the Employee with respect to previous review\n:{accomp}')
                 
 
     with tab2:
-        st.write('Employee_id')
-        st.write('Employee_name')
+        st.write(f'Employee ID selected: {st.session_state["emp_value"]}')
+        st.write(f'Employee name: {get_name_e(st.session_state["emp_value"])}')
+        E_id = st.session_state['emp_value']
         M_tasks_A = st.number_input('Number of tasks assigned',min_value=0)
         M_tasks_C = st.number_input('Number of tasks completed',min_value=0)
         M_hours= st.number_input('Number of hours saved',min_value=0)
         M_defects_F  = st.number_input('Number of defects found',min_value=0)
         M_defects_Fix = st.number_input('number of defects fixed',min_value=0)
-        age = st.slider('Effectiveness in work', 0, 10, 5)
-        age = st.slider('Integrity', 0, 10, 5)
-        age = st.slider('Accountability', 0, 10, 5)
-        age = st.slider('Quality of work', 0, 10, 5)
-        age = st.slider('Time management', 0, 10, 5)
+        age1 = st.slider('Effectiveness in work', 0, 10, 5)
+        age2 = st.slider('Integrity', 0, 10, 5)
+        age3 = st.slider('Accountability', 0, 10, 5)
+        age4 = st.slider('Quality of work', 0, 10, 5)
+        age5 = st.slider('Time management', 0, 10, 5)
         acc = st.text_area('Additional NOTE')
-        if st.button('Submit'):
-            #if successful 
-            st.success('Review of employee successfully completed')
-        
+        bt = st.button('Submit')
+        if (M_tasks_A>=0) and (M_tasks_C>=0) and (M_hours>=0) and (M_defects_F>=0) and (M_defects_Fix>=0) and (age1>=0) and (age2>=0) and (age3>=0) and (age4>=0) and (age5>=0) and acc:
+            if bt:
+            #if successful
+                print("HI")
+                execute_cmd(f"Insert into m_resp values('{mgr_id}','{get_name_m(mgr_id)}',{M_tasks_A},{M_tasks_C},{M_hours},{M_defects_F},{M_defects_Fix},{age1},{age2},'{E_id}',{age3},{age4},{age5},'{acc}');")
+                st.success("Successfully received your response")
          
     with tab3:
         c1,c2,c3 = st.columns(3)

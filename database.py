@@ -46,11 +46,62 @@ def execute_cmd(str1):
         c.execute(str1)
         mydb.commit()
     except Exception as e:
-        # st.info()
+        st.info(e)
         st.error("Entered information is incomplete!Please fill all the fields since they are important")
         
-def get_name(eid):
+def get_name_e(eid):
     c.execute(f"select e_name from employee where eid='{eid}'")
     res = c.fetchall()
     return res[0][0]
+    
+def get_name_m(mid):
+    c.execute(f"select m_name from manager where m_id='{mid}'")
+    res = c.fetchall()
+    return res[0][0]
+
+def get_first_column(res):
+    arr=[]
+    for i in range(len(res)):
+        arr.append(res[i][0])
+    
+    return arr
+def show_employees(m_id):
+    # print(u_id)
+    
+    c.execute(f"select eid from employee where manager_id = '{m_id}'")
+    res = c.fetchall()
+    res=get_first_column(res)
+    
+    return res
+
+def get_emp_details(e_id):
+    # print(u_id)
+  
+    c.execute(f"select e_name,eid,mail_id,ph_no from employee where eid = '{e_id}'")
+    res = c.fetchall()
+    
+    return res[0]
+
+def get_mgr_Ids():
+    c.execute(f"select m_id from manager")
+    res = c.fetchall()
+    res=get_first_column(res)
+
+    return res
+
+def get_mgr_details(m_id):
+    c.execute(f"select m_name,m_id,mail_id,ph_no from manager where m_id = '{m_id}'")
+    res = c.fetchall()
+    
+    return res[0]
+
+def get_emp_resp_details(e_id):
+    # print(u_id)
+  
+    c.execute(f"select no_of_task_assigned,no_of_task_completed,no_of_hrs_saved,no_of_defects_found,no_of_defects_fixed,additional_accomplishments from emp_resp where eid = '{e_id}'")
+    res = c.fetchall()
+    
+    return res[0]
+
+    
     

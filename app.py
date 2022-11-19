@@ -15,6 +15,7 @@ def login_clicked(user_id,password):
         if p==1:
             st.session_state['loggedIn']=True
             st.session_state['role'] = role
+            st.session_state['user_id'] = user_id
             # st.write(role)
             # elif n==2:
             #     st.session_state['loggedIn'] = True

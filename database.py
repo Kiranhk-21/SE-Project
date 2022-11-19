@@ -43,7 +43,14 @@ def auth(u_id,password):
         
 def execute_cmd(str1):
     try:
-        i = c.execute(str1)
-        st.info("Successfully submitted your form.Please wait for our response")
-    except :
-        st.info("Entered information is incomplete!Please fill all the fields since they are important")
+        c.execute(str1)
+        mydb.commit()
+    except Exception as e:
+        # st.info()
+        st.error("Entered information is incomplete!Please fill all the fields since they are important")
+        
+def get_name(eid):
+    c.execute(f"select e_name from employee where eid='{eid}'")
+    res = c.fetchall()
+    return res[0][0]
+    

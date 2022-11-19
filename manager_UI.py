@@ -1,13 +1,14 @@
 import streamlit as st
 import datetime
-from helper import get_form_responces
+# from helper import get_form_responces
 # st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
 
 def M_UI():
     # st.write('logged in as manager'
     col1, col2 = st.columns([12,1])
     with col2:
-         dummy = st.button("LogOut")    
+         if st.button("LogOut"):
+             st.session_state['loggedIn']=False    
     st.write('##')
     st.info('logged in as Manager')
     st.write('##')
